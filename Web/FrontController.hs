@@ -2,13 +2,12 @@ module Web.FrontController where
 
 import IHP.RouterPrelude
 import Web.Controller.Prelude
-import Web.View.Layout (defaultLayout)
-
 -- Controller Imports
 import Web.Controller.Static
+import Web.View.Layout (defaultLayout)
 
 instance FrontController WebApplication where
-    controllers = 
+    controllers =
         [ startPage WelcomeAction
         -- Generator Marker
         ]
