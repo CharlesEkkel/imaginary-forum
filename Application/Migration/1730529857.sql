@@ -1,23 +1,21 @@
-CREATE FUNCTION set_updated_at_to_now() RETURNS TRIGGER AS $$
-BEGIN
+CREATE FUNCTION set_updated_at_to_now() RETURNS TRIGGER AS $$BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
-END;
-$$ language plpgsql;
--- Your database schema. Use the Schema Designer at http://localhost:8001/ to add some tables.
+END;$$ language PLPGSQL;
 CREATE TABLE users (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    email TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    email TEXT NOT NULL,
     first_name TEXT NOT NULL,
-    middle_name TEXT DEFAULT NULL,
-    last_name TEXT DEFAULT NULL
+    middle_name TEXT DEFAULT null,
+    last_name TEXT DEFAULT null
 );
+ALTER TABLE users ADD CONSTRAINT users_email_key UNIQUE(email);
 CREATE TABLE threads (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     user_id UUID NOT NULL,
     title TEXT NOT NULL
 );
@@ -26,8 +24,8 @@ CREATE TRIGGER update_threads_updated_at BEFORE UPDATE ON threads FOR EACH ROW E
 CREATE INDEX threads_user_id_index ON threads (user_id);
 CREATE TABLE posts (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     user_id UUID NOT NULL,
     thread_id UUID NOT NULL,
     message TEXT DEFAULT '' NOT NULL
