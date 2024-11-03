@@ -9,21 +9,12 @@ instance View IndexView where
         [hsx|
         {breadcrumb}
 
-        <h1 class="h3">Latest Discussions</h1>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Thread</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>{forEach threads renderThread}</tbody>
-            </table>
-            {renderPagination pagination}
+        <h1 class="h3 mb-4">Latest Discussions</h1>
+            
+        <div class="container">
+            {forEach threads renderThread}
         </div>
+        {renderPagination pagination}
     |]
       where
         breadcrumb =
@@ -34,10 +25,19 @@ instance View IndexView where
 renderThread :: Thread -> Html
 renderThread thread =
     [hsx|
-    <tr>
-        <td>{thread.title}</td>
-        <td><a href={ShowThreadAction thread.id}>Show</a></td>
-        <td><a href={EditThreadAction thread.id} class="text-muted">Edit</a></td>
-        <td><a href={DeleteThreadAction thread.id} class="js-delete text-muted">Delete</a></td>
-    </tr>
+    <article class="card col-12 col-md-6">
+        <h2 class="h5 card-header">
+            {thread.title}
+        </h2>
+        <div class="card-body">
+            <p>
+                Several more details here...
+            </p>
+            <div class="hstack gap-2">
+                <a class="btn btn-primary" href={ShowThreadAction thread.id}>Show</a>
+                <a class="btn btn-outline-primary " href={EditThreadAction thread.id}>Edit</a>
+                <a class="btn btn-outline-primary js-delete" href={DeleteThreadAction thread.id}>Delete</a>
+            </div>
+        </div>
+    </article>
 |]
