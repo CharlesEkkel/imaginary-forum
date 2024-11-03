@@ -7,6 +7,7 @@ import IHP.Environment
 import IHP.ViewPrelude
 import Web.Routes
 import Web.Types
+import Web.View.HeaderLayout
 
 defaultLayout :: Html -> Html
 defaultLayout inner =
@@ -22,9 +23,9 @@ defaultLayout inner =
                 <title>{pageTitleOrDefault "AI Forum"}</title>
             </head>
             <body>
-                <div class="container mt-4">
+                <div class="container">
                     {renderFlashMessages}
-                    {inner}
+                    {headerLayout inner}
                 </div>
             </body>
         </html>
