@@ -1,11 +1,11 @@
-module Web.View.Static.Welcome where
+module Web.View.Static.About where
 
 import Web.View.Prelude
 
-data WelcomeView = WelcomeView
+data AboutView = AboutView
 
-instance View WelcomeView where
-    html WelcomeView =
+instance View AboutView where
+    html AboutView =
         [hsx|
             <div>
                 Hello there good friend.

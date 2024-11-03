@@ -7,7 +7,6 @@ import IHP.Environment
 import IHP.ViewPrelude
 import Web.Routes
 import Web.Types
-import Web.View.HeaderLayout
 
 defaultLayout :: Html -> Html
 defaultLayout inner =
@@ -25,11 +24,51 @@ defaultLayout inner =
             <body>
                 <div class="container">
                     {renderFlashMessages}
-                    {headerLayout inner}
+                    {header}
+
+                    <main>
+                        {inner}
+                    </main>
                 </div>
             </body>
         </html>
     |]
+
+header :: Html
+header =
+    [hsx|
+        <header class="row bg-light mb-4 rounded-bottom">
+            <nav class="navbar container" aria-label="High-level page links">
+                <div class="container-fluid d-flex flex-row justify-content-between">
+                    <a class="navbar-brand" href="/">The Imaginary Forum</a>
+                    <ul class="navbar-nav hstack gap-4">
+                        <li class="nav-item">
+                            <a href={ThreadsAction} 
+                               class={classes ["nav-link", ("active", isFrontPage)]}>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href={AboutAction} 
+                               class={classes ["nav-link", ("active", isAboutPage)]}>
+                                About
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login" 
+                               aria-current={False}
+                               class={classes ["btn btn-outline-primary", ("active", False)]}>
+                                Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    |]
+  where
+    isFrontPage = isActiveAction ThreadsAction || isActivePath ("/" :: Text)
+    isAboutPage = isActiveAction AboutAction
 
 -- The 'assetPath' function used below appends a `?v=SOME_VERSION` to the static assets in production
 -- This is useful to avoid users having old CSS and JS files in their browser cache once a new version is deployed

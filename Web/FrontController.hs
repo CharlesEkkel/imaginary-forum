@@ -1,9 +1,10 @@
 module Web.FrontController where
 
 import IHP.RouterPrelude
-import Web.Controller.Prelude
 -- Controller Imports
 
+import IHP.Welcome.Controller (WelcomeController)
+import Web.Controller.Prelude
 import Web.Controller.Static
 import Web.Controller.Threads
 import Web.View.Layout (defaultLayout)
@@ -11,8 +12,8 @@ import Web.View.Layout (defaultLayout)
 instance FrontController WebApplication where
     controllers =
         [ startPage ThreadsAction
-        , -- Generator Marker
-          parseRoute @ThreadsController
+        , parseRoute @StaticController
+        , parseRoute @ThreadsController
         ]
 
 instance InitControllerContext WebApplication where

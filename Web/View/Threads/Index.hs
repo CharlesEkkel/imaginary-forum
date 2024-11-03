@@ -7,7 +7,9 @@ data IndexView = IndexView {threads :: [Thread], pagination :: Pagination}
 instance View IndexView where
     html IndexView {..} =
         [hsx|
-        <h1 class="h3 mb-4 ms-2">Latest Discussions</h1>
+        {breadcrumb}
+
+        <h1 class="h3">Latest Discussions</h1>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -24,6 +26,10 @@ instance View IndexView where
         </div>
     |]
       where
+        breadcrumb =
+            renderBreadcrumb
+                [ breadcrumbText "Home"
+                ]
 
 renderThread :: Thread -> Html
 renderThread thread =
