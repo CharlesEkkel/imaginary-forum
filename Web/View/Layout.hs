@@ -37,7 +37,7 @@ defaultLayout inner =
 header :: Html
 header =
     [hsx|
-        <header class="row bg-light mb-4 rounded-bottom">
+        <header class="row mb-4 sticky-top rounded-bottom">
             <nav class="navbar container" aria-label="High-level page links">
                 <div class="container-fluid d-flex flex-row justify-content-between">
                     <a class="navbar-brand" href="/">The Imaginary Forum</a>
