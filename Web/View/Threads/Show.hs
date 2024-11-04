@@ -7,11 +7,10 @@ data ShowView = ShowView {thread :: Thread}
 instance View ShowView where
     html ShowView {..} =
         [hsx|
-        {breadcrumb}
-        <h1>Show Thread</h1>
-        <p>{thread}</p>
-
-    |]
+            {breadcrumb}
+            <h1>Show Thread</h1>
+            <p>{thread}</p>
+        |]
       where
         breadcrumb =
             renderBreadcrumb

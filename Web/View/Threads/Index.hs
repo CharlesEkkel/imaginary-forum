@@ -9,25 +9,25 @@ data IndexView = IndexView {threads :: [Thread], pagination :: Pagination}
 instance View IndexView where
     html IndexView {..} =
         [hsx|
-        {breadcrumb}
+            {breadcrumb}
 
-        <div class="hstack mb-4">
-            <h1 class="h3 me-auto">Latest Discussions</h1>
-            <a class="btn btn-primary hstack gap-2" href={NewThreadAction}>
-                <svg width="16" height="16">
-                    <use href={assetPath "/icons/square-plus.svg" ++ "#plus"}/>
-                </svg>
-                New Discussion
-            </a>
-        </div>
-            
-        <div class="container g-2">
-            <span class="row row-cols-1 row-cols-lg-2">
-                {forEach threads renderThread}
-            </span>
-        </div>
-        {renderPagination pagination}
-    |]
+            <div class="hstack mb-4">
+                <h1 class="h2 me-auto">Latest Discussions</h1>
+                <a class="btn btn-primary hstack gap-2" href={NewThreadAction}>
+                    <svg width="16" height="16">
+                        <use href={assetPath "/icons/square-plus.svg" ++ "#plus"}/>
+                    </svg>
+                    New
+                </a>
+            </div>
+                
+            <div class="container g-2">
+                <span class="row row-cols-1 row-cols-lg-2">
+                    {forEach threads renderThread}
+                </span>
+            </div>
+            {renderPagination pagination}
+        |]
       where
         breadcrumb =
             renderBreadcrumb

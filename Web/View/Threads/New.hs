@@ -9,14 +9,14 @@ data NewView = NewView {thread :: Thread, users :: [User]}
 instance View NewView where
     html NewView {..} =
         [hsx|
-        {breadcrumb}
-        <h1>New Thread</h1>
-        {renderForm users thread}
-    |]
+            {breadcrumb}
+            <h1 class="h2 mb-4">Create a new thread</h1>
+            {renderForm users thread}
+        |]
       where
         breadcrumb =
             renderBreadcrumb
-                [ breadcrumbLink "Threads" ThreadsAction
+                [ breadcrumbLink "Home" ThreadsAction
                 , breadcrumbText "New Thread"
                 ]
 
