@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.View.Threads.Index where
 
 import Web.View.Prelude
@@ -25,19 +27,24 @@ instance View IndexView where
 renderThread :: Thread -> Html
 renderThread thread =
     [hsx|
-    <article class="card col-12 col-md-6">
-        <h2 class="h5 card-header">
-            {thread.title}
-        </h2>
-        <div class="card-body">
-            <p>
-                Several more details here...
-            </p>
-            <div class="hstack gap-2">
-                <a class="btn btn-primary" href={ShowThreadAction thread.id}>Show</a>
-                <a class="btn btn-outline-primary " href={EditThreadAction thread.id}>Edit</a>
-                <a class="btn btn-outline-primary js-delete" href={DeleteThreadAction thread.id}>Delete</a>
+        <article class="card shadow-sm col-12 col-md-6">
+            <h2 class="h5 card-header">
+                {thread.title}
+            </h2>
+            <div class="card-body">
+                <p class="card-text">
+                    Several more details here...
+                </p>
+                <p class="card-text text-muted">
+                    Last updated {timeOfCreation}
+                </p>
+                <div class="hstack gap-2">
+                    <a class="btn btn-outline-primary stretched-link" href={ShowThreadAction thread.id}>Comments</a>
+                </div>
             </div>
-        </div>
-    </article>
-|]
+        </article>
+    |]
+  where
+    timeOfCreation =
+        thread.updatedAt
+            |> formatTime defaultTimeLocale "%Y-%m-%d, %H:%M:%S"
