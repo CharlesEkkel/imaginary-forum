@@ -63,4 +63,4 @@ instance Controller CommentsController where
 
 buildComment comment =
     comment
-        |> fill @'["postId", "content"]
+        |> fill @'["content"]

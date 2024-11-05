@@ -74,4 +74,4 @@ instance Controller PostController where
 
 buildPost post =
     post
-        |> fill @'["userId", "title", "content"]
+        |> fill @'["title", "content"]
