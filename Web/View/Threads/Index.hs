@@ -14,9 +14,7 @@ instance View IndexView where
             <div class="hstack mb-4">
                 <h1 class="h2 me-auto">Latest Discussions</h1>
                 <a class="btn btn-primary hstack gap-2" href={NewThreadAction}>
-                    <svg width="16" height="16">
-                        <use href={assetPath "/icons/square-plus.svg" ++ "#plus"}/>
-                    </svg>
+                    {svgIcon "square-plus"}
                     New
                 </a>
             </div>
