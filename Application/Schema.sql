@@ -45,13 +45,16 @@ CREATE TABLE comments (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     user_id UUID NOT NULL,
     post_id UUID NOT NULL,
-    content TEXT DEFAULT '' NOT NULL
+    content TEXT DEFAULT '' NOT NULL,
+    thread_id UUID NOT NULL
 );
 CREATE INDEX comments_created_at_index ON comments (created_at);
 CREATE TRIGGER update_comments_updated_at BEFORE UPDATE ON comments FOR EACH ROW EXECUTE FUNCTION set_updated_at_to_now();
 CREATE INDEX comments_user_id_index ON comments (user_id);
 CREATE INDEX comments_post_id_index ON comments (post_id);
+CREATE INDEX comments_thread_id_index ON comments (thread_id);
 ALTER TABLE comments ADD CONSTRAINT comments_ref_post_id FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE NO ACTION;
+ALTER TABLE comments ADD CONSTRAINT comments_ref_thread_id FOREIGN KEY (thread_id) REFERENCES threads (id) ON DELETE NO ACTION;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE NO ACTION;
 ALTER TABLE posts ADD CONSTRAINT posts_ref_thread_id FOREIGN KEY (thread_id) REFERENCES threads (id) ON DELETE NO ACTION;
 ALTER TABLE posts ADD CONSTRAINT posts_ref_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE NO ACTION;
