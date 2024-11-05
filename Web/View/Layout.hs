@@ -44,20 +44,23 @@ header =
                     <ul class="navbar-nav hstack gap-4">
                         <li class="nav-item">
                             <a href={ThreadsAction} 
+                               aria-current={isFrontPage `ifTrueThen` "page"}
                                class={classes ["nav-link", ("active", isFrontPage)]}>
                                 Home
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href={AboutAction} 
+                               aria-current={isAboutPage `ifTrueThen` "page"}
                                class={classes ["nav-link", ("active", isAboutPage)]}>
                                 About
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/login" 
-                               aria-current={False}
-                               class={classes ["btn btn-outline-primary", ("active", False)]}>
+                            <a href={UsersAction} 
+                               aria-current={isLoginSection `ifTrueThen` "page"}
+                               class={classes ["btn btn-outline-primary hstack gap-2", ("active", isLoginSection)]}>
+                                {svgIcon "person"}
                                 Login
                             </a>
                         </li>
@@ -69,6 +72,7 @@ header =
   where
     isFrontPage = isActiveAction ThreadsAction || isActivePath ("/" :: Text)
     isAboutPage = isActiveAction AboutAction
+    isLoginSection = isActiveController @UsersController
 
 -- The 'assetPath' function used below appends a `?v=SOME_VERSION` to the static assets in production
 -- This is useful to avoid users having old CSS and JS files in their browser cache once a new version is deployed

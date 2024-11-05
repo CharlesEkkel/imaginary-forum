@@ -8,3 +8,9 @@ import Web.Types
 instance AutoRoute StaticController
 
 instance AutoRoute ThreadsController
+
+instance AutoRoute PostController
+
+
+instance AutoRoute UsersController
+

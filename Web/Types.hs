@@ -17,3 +17,23 @@ data ThreadsController
     | UpdateThreadAction {threadId :: !(Id Thread)}
     | DeleteThreadAction {threadId :: !(Id Thread)}
     deriving (Eq, Show, Data)
+
+data PostController
+    = PostsAction
+    | NewPostAction {currentThreadId :: !(Id Thread)}
+    | ShowPostAction {postId :: !(Id Post)}
+    | CreatePostAction {currentThreadId :: !(Id Thread)}
+    | EditPostAction {postId :: !(Id Post)}
+    | UpdatePostAction {postId :: !(Id Post)}
+    | DeletePostAction {postId :: !(Id Post)}
+    deriving (Eq, Show, Data)
+
+data UsersController
+    = UsersAction
+    | NewUserAction
+    | ShowUserAction {userId :: !(Id User)}
+    | CreateUserAction
+    | EditUserAction {userId :: !(Id User)}
+    | UpdateUserAction {userId :: !(Id User)}
+    | DeleteUserAction {userId :: !(Id User)}
+    deriving (Eq, Show, Data)
