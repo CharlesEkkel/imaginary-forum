@@ -11,3 +11,6 @@ instance AutoRoute ThreadsController
 
 instance AutoRoute PostController
 
+
+instance AutoRoute UsersController
+

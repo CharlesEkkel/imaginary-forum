@@ -11,3 +11,7 @@ svgIcon iconName =
             <use href={assetPath ("/icons/" <> iconName <> ".svg") <> "#" <> iconName}/>
         </svg>
     |]
+
+-- | Use concrete type Text to prevent overlapping instance complaints.
+ifTrueThen :: Bool -> Text -> Maybe Text
+ifTrueThen condition value = if condition then Just value else Nothing

@@ -27,6 +27,7 @@ renderForm users thread =
         [hsx|
             {(selectField #userId users)}
             {(textField #title)}
+            {(textField #description)}
             {submitButton}
         |]
 

@@ -15,7 +15,7 @@ instance View IndexView where
                 <h1 class="h2 me-auto">Latest Discussions</h1>
                 <a class="btn btn-primary hstack gap-2" href={NewThreadAction}>
                     {svgIcon "square-plus"}
-                    New
+                    New Thread
                 </a>
             </div>
                 
@@ -42,7 +42,7 @@ renderThread thread =
                 </h2>
                 <div class="card-body">
                     <p class="card-text">
-                        Several more details here...
+                        {thread.description}
                     </p>
                     <p class="card-text text-muted">
                         Last updated {timeOfCreation}
