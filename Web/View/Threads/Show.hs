@@ -28,7 +28,7 @@ instance View ShowView where
         breadcrumb =
             renderBreadcrumb
                 [ breadcrumbLink "Home" ThreadsAction
-                , breadcrumbText [hsx|{thread.title}|]
+                , breadcrumbText (toHtml thread.title)
                 ]
 
 renderPost :: Post -> Html

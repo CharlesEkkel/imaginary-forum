@@ -1,8 +1,10 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.View.Post.Edit where
 
 import Web.View.Prelude
 
-data EditView = EditView {post :: Post}
+data EditView = EditView {post :: Post, currentThread :: Thread}
 
 instance View EditView where
     html EditView {..} =
@@ -14,7 +16,8 @@ instance View EditView where
       where
         breadcrumb =
             renderBreadcrumb
-                [ breadcrumbLink "Posts" PostsAction
+                [ breadcrumbLink "Home" ThreadsAction
+                , breadcrumbLink (toHtml currentThread.title) (ShowThreadAction currentThread.id)
                 , breadcrumbText "Edit Post"
                 ]
 

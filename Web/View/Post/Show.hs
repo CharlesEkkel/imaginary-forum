@@ -19,5 +19,5 @@ instance View ShowView where
             renderBreadcrumb
                 [ breadcrumbLink "Home" ThreadsAction
                 , breadcrumbLink [hsx|{currentThread.title}|] (ShowThreadAction currentThread.id)
-                , breadcrumbText [hsx|{post.title}|]
+                , breadcrumbText (toHtml post.title)
                 ]

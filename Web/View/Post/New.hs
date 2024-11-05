@@ -17,7 +17,7 @@ instance View NewView where
         breadcrumb =
             renderBreadcrumb
                 [ breadcrumbLink "Home" ThreadsAction
-                , breadcrumbLink [hsx|{currentThread.title}|] (ShowThreadAction currentThread.id)
+                , breadcrumbLink (toHtml currentThread.title) (ShowThreadAction currentThread.id)
                 , breadcrumbText "New Post"
                 ]
 

@@ -25,9 +25,13 @@ instance Controller PostController where
         render ShowView {..}
     action EditPostAction {postId} = do
         post <- fetch postId
+        currentThread <- fetch post.threadId
+
         render EditView {..}
     action UpdatePostAction {postId} = do
         post <- fetch postId
+        currentThread <- fetch post.threadId
+
         post
             |> buildPost
             |> ifValid \case
