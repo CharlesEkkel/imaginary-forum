@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.Controller.Comments where
 
 import Web.Controller.Prelude
@@ -11,7 +13,9 @@ instance Controller CommentsController where
         (commentsQ, pagination) <- query @Comment |> paginate
         comments <- commentsQ |> fetch
         render IndexView {..}
-    action NewCommentAction = do
+    action NewCommentAction {currentPostId} = do
+        post <- fetch currentPostId
+        thread <- fetch post.threadId
         let
             comment = newRecord
         render NewView {..}
@@ -31,15 +35,25 @@ instance Controller CommentsController where
                     comment <- comment |> updateRecord
                     setSuccessMessage "Comment updated"
                     redirectTo EditCommentAction {..}
-    action CreateCommentAction = do
+    action CreateCommentAction {currentPostId} = do
+        post <- fetch currentPostId
         let
             comment = newRecord @Comment
         comment
             |> buildComment
             |> ifValid \case
-                Left comment -> render NewView {..}
+                Left comment -> do
+                    thread <- fetch post.threadId
+                    render NewView {..}
                 Right comment -> do
-                    comment <- comment |> createRecord
+                    let
+                        fullComment =
+                            comment
+                                |> set (Proxy :: Proxy "userId") "056fbcb1-3a2b-453e-b339-641ac58a33a7"
+                                |> set (Proxy :: Proxy "threadId") post.threadId
+                                |> set (Proxy :: Proxy "postId") post.id
+
+                    comment <- fullComment |> createRecord
                     setSuccessMessage "Comment created"
                     redirectTo CommentsAction
     action DeleteCommentAction {commentId} = do
@@ -50,4 +64,4 @@ instance Controller CommentsController where
 
 buildComment comment =
     comment
-        |> fill @'["userId", "postId", "content", "threadId"]
+        |> fill @'["postId", "content"]

@@ -40,9 +40,9 @@ data UsersController
 
 data CommentsController
     = CommentsAction
-    | NewCommentAction
+    | NewCommentAction {currentPostId :: !(Id Post)}
     | ShowCommentAction {commentId :: !(Id Comment)}
-    | CreateCommentAction
+    | CreateCommentAction {currentPostId :: !(Id Post)}
     | EditCommentAction {commentId :: !(Id Comment)}
     | UpdateCommentAction {commentId :: !(Id Comment)}
     | DeleteCommentAction {commentId :: !(Id Comment)}

@@ -2,6 +2,7 @@
 
 module Web.Controller.Post where
 
+import Data.Traversable (Traversable (traverse))
 import Web.Controller.Prelude
 import Web.View.Post.Edit
 import Web.View.Post.Index
@@ -22,6 +23,14 @@ instance Controller PostController where
     action ShowPostAction {postId} = do
         post <- fetch postId
         currentThread <- fetch post.threadId
+
+        (commentQ, pagination) <- query @Comment |> paginate
+        commentsOnly <- commentQ |> fetch
+        users <- traverse fetch $ fmap (\c -> c.userId) commentsOnly
+
+        let
+            comments = zip users commentsOnly
+
         render ShowView {..}
     action EditPostAction {postId} = do
         post <- fetch postId
@@ -50,7 +59,6 @@ instance Controller PostController where
                 Left post -> render NewView {..}
                 Right post -> do
                     let
-                        -- fullPost = (post :: Post) {threadId = currentThreadId}
                         fullPost =
                             post
                                 |> set (Proxy :: Proxy "threadId") currentThreadId

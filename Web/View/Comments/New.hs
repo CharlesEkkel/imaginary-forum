@@ -1,31 +1,33 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.View.Comments.New where
 
 import Web.View.Prelude
 
-data NewView = NewView {comment :: Comment}
+data NewView = NewView {comment :: Comment, post :: Post, thread :: Thread}
 
 instance View NewView where
     html NewView {..} =
         [hsx|
             {breadcrumb}
             <h1>New Comment</h1>
-            {renderForm comment}
+            {renderForm post comment}
         |]
       where
         breadcrumb =
             renderBreadcrumb
-                [ breadcrumbLink "Comments" CommentsAction
+                [ breadcrumbLink "Home" ThreadsAction
+                , breadcrumbLink (toHtml thread.title) (ShowThreadAction thread.id)
+                , breadcrumbLink (toHtml post.title) (ShowPostAction post.id)
                 , breadcrumbText "New Comment"
                 ]
 
-renderForm :: Comment -> Html
-renderForm comment =
-    formFor
+renderForm :: Post -> Comment -> Html
+renderForm post comment =
+    formFor'
         comment
+        (pathTo $ CreateCommentAction post.id)
         [hsx|
-            {(textField #userId)}
-            {(textField #postId)}
             {(textField #content)}
-            {(textField #threadId)}
             {submitButton}
         |]
