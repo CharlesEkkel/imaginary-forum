@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.Controller.Post where
 
 import Web.Controller.Prelude
@@ -11,12 +13,15 @@ instance Controller PostController where
         (postQ, pagination) <- query @Post |> paginate
         post <- postQ |> fetch
         render IndexView {..}
-    action NewPostAction = do
+    action NewPostAction {currentThreadId} = do
+        currentThread <- fetch currentThreadId
         let
             post = newRecord
+
         render NewView {..}
     action ShowPostAction {postId} = do
         post <- fetch postId
+        currentThread <- fetch post.threadId
         render ShowView {..}
     action EditPostAction {postId} = do
         post <- fetch postId
@@ -31,7 +36,8 @@ instance Controller PostController where
                     post <- post |> updateRecord
                     setSuccessMessage "Post updated"
                     redirectTo EditPostAction {..}
-    action CreatePostAction = do
+    action CreatePostAction {currentThreadId} = do
+        currentThread <- fetch currentThreadId
         let
             post = newRecord @Post
         post
@@ -39,7 +45,14 @@ instance Controller PostController where
             |> ifValid \case
                 Left post -> render NewView {..}
                 Right post -> do
-                    post <- post |> createRecord
+                    let
+                        -- fullPost = (post :: Post) {threadId = currentThreadId}
+                        fullPost =
+                            post
+                                |> set (Proxy :: Proxy "threadId") currentThreadId
+                                |> set (Proxy :: Proxy "userId") "056fbcb1-3a2b-453e-b339-641ac58a33a7"
+
+                    post <- fullPost |> createRecord
                     setSuccessMessage "Post created"
                     redirectTo PostsAction
     action DeletePostAction {postId} = do
@@ -50,4 +63,4 @@ instance Controller PostController where
 
 buildPost post =
     post
-        |> fill @'["userId", "threadId", "content"]
+        |> fill @'["userId", "title", "content"]

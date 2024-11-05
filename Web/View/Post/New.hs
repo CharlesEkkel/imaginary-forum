@@ -1,30 +1,33 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.View.Post.New where
 
 import Web.View.Prelude
 
-data NewView = NewView {post :: Post}
+data NewView = NewView {post :: Post, currentThread :: Thread}
 
 instance View NewView where
     html NewView {..} =
         [hsx|
-        {breadcrumb}
-        <h1>New Post</h1>
-        {renderForm post}
-    |]
+            {breadcrumb}
+            <h1>New Post</h1>
+            {renderForm currentThread post}
+        |]
       where
         breadcrumb =
             renderBreadcrumb
-                [ breadcrumbLink "Posts" PostsAction
+                [ breadcrumbLink "Home" ThreadsAction
+                , breadcrumbLink [hsx|{currentThread.title}|] (ShowThreadAction currentThread.id)
                 , breadcrumbText "New Post"
                 ]
 
-renderForm :: Post -> Html
-renderForm post =
-    formFor
+renderForm :: Thread -> Post -> Html
+renderForm thread post =
+    formFor'
         post
+        (pathTo $ CreatePostAction thread.id)
         [hsx|
-            {(textField #userId)}
-            {(textField #threadId)}
-            {(textField #content)}
+            {(textField #title)}
+            {(textareaField #content)}
             {submitButton}
         |]

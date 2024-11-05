@@ -1,6 +1,8 @@
 module Web.Controller.Threads where
 
 import Web.Controller.Prelude
+import Web.View.Layout (defaultLayout)
+import Web.View.Post.Index qualified as Posts
 import Web.View.Threads.Edit
 import Web.View.Threads.Index
 import Web.View.Threads.New
@@ -21,6 +23,14 @@ instance Controller ThreadsController where
         render NewView {..}
     action ShowThreadAction {threadId} = do
         thread <- fetch threadId
+
+        (postsQ, pagination) <-
+            query @Post
+                |> filterWhere (Proxy :: Proxy "threadId", threadId)
+                |> paginate
+
+        posts <- fetch postsQ
+
         render ShowView {..}
     action EditThreadAction {threadId} = do
         thread <- fetch threadId

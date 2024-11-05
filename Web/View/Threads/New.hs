@@ -30,8 +30,3 @@ renderForm users thread =
             {(textField #description)}
             {submitButton}
         |]
-
-instance CanSelect User where
-    type SelectValue User = Id User
-    selectValue user = user.id
-    selectLabel user = user.firstName

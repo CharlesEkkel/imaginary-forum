@@ -1,17 +1,23 @@
+{-# LANGUAGE OverloadedRecordDot #-}
+
 module Web.View.Post.Show where
+
 import Web.View.Prelude
 
-data ShowView = ShowView { post :: Post }
+data ShowView = ShowView {post :: Post, currentThread :: Thread}
 
 instance View ShowView where
-    html ShowView { .. } = [hsx|
+    html ShowView {..} =
+        [hsx|
         {breadcrumb}
-        <h1>Show Post</h1>
-        <p>{post}</p>
+        <h1 class="h3">{post.title}</h1>
+        <p>{post.content}</p>
 
     |]
-        where
-            breadcrumb = renderBreadcrumb
-                            [ breadcrumbLink "Posts" PostsAction
-                            , breadcrumbText "Show Post"
-                            ]
+      where
+        breadcrumb =
+            renderBreadcrumb
+                [ breadcrumbLink "Home" ThreadsAction
+                , breadcrumbLink [hsx|{currentThread.title}|] (ShowThreadAction currentThread.id)
+                , breadcrumbText [hsx|{post.title}|]
+                ]

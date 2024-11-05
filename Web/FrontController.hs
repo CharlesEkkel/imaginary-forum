@@ -16,6 +16,7 @@ instance FrontController WebApplication where
         [ startPage ThreadsAction
         , parseRoute @StaticController
         , parseRoute @ThreadsController
+        , parseRoute @PostController
         , parseRoute @UsersController
         ]
 
