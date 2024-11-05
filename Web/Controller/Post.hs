@@ -58,20 +58,19 @@ instance Controller PostController where
             |> ifValid \case
                 Left post -> render NewView {..}
                 Right post -> do
-                    let
-                        fullPost =
-                            post
-                                |> set (Proxy :: Proxy "threadId") currentThreadId
-                                |> set (Proxy :: Proxy "userId") "056fbcb1-3a2b-453e-b339-641ac58a33a7"
+                    post <-
+                        post
+                            |> set (Proxy :: Proxy "threadId") currentThreadId
+                            |> set (Proxy :: Proxy "userId") "056fbcb1-3a2b-453e-b339-641ac58a33a7"
+                            |> createRecord
 
-                    post <- fullPost |> createRecord
                     setSuccessMessage "Post created"
-                    redirectTo PostsAction
+                    redirectTo $ ShowPostAction post.id
     action DeletePostAction {postId} = do
         post <- fetch postId
         deleteRecord post
         setSuccessMessage "Post deleted"
-        redirectTo PostsAction
+        redirectTo $ ShowThreadAction post.threadId
 
 buildPost post =
     post

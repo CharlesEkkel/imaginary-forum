@@ -10,7 +10,7 @@ instance View NewView where
     html NewView {..} =
         [hsx|
             {breadcrumb}
-            <h1>New Comment</h1>
+            <h1 class="h3">New Comment</h1>
             {renderForm post comment}
         |]
       where

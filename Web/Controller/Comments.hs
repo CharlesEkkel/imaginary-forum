@@ -46,21 +46,20 @@ instance Controller CommentsController where
                     thread <- fetch post.threadId
                     render NewView {..}
                 Right comment -> do
-                    let
-                        fullComment =
-                            comment
-                                |> set (Proxy :: Proxy "userId") "056fbcb1-3a2b-453e-b339-641ac58a33a7"
-                                |> set (Proxy :: Proxy "threadId") post.threadId
-                                |> set (Proxy :: Proxy "postId") post.id
+                    comment <-
+                        comment
+                            |> set (Proxy :: Proxy "userId") "056fbcb1-3a2b-453e-b339-641ac58a33a7"
+                            |> set (Proxy :: Proxy "threadId") post.threadId
+                            |> set (Proxy :: Proxy "postId") post.id
+                            |> createRecord
 
-                    comment <- fullComment |> createRecord
                     setSuccessMessage "Comment created"
-                    redirectTo CommentsAction
+                    redirectTo $ ShowPostAction post.id
     action DeleteCommentAction {commentId} = do
         comment <- fetch commentId
         deleteRecord comment
         setSuccessMessage "Comment deleted"
-        redirectTo CommentsAction
+        redirectTo $ ShowPostAction comment.postId
 
 buildComment comment =
     comment

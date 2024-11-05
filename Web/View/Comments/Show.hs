@@ -8,7 +8,7 @@ instance View ShowView where
     html ShowView {..} =
         [hsx|
             {breadcrumb}
-            <h1>Show Comment</h1>
+            <h1 class="h3">Show Comment</h1>
             <p>{comment}</p>
         |]
       where

@@ -8,7 +8,7 @@ instance View EditView where
     html EditView {..} =
         [hsx|
         {breadcrumb}
-        <h1>Edit User</h1>
+        <h1 class="h3">Edit User</h1>
         {renderForm user}
     |]
       where

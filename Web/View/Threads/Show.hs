@@ -11,8 +11,11 @@ instance View ShowView where
         [hsx|
             {breadcrumb}
             <div class="hstack">
-                <h1>{thread.title}</h1>
-                <a href={NewPostAction thread.id}>New Post</a>
+                <h1 class="h3 me-auto">{thread.title}</h1>
+                <a class="btn btn-primary hstack gap-2" href={NewPostAction thread.id}>
+                    {svgIcon "square-plus"}
+                    New Post
+                </a>
             </div>
             <p>{thread.description}</p>
             <div class="container">

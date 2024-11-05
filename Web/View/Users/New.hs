@@ -8,7 +8,7 @@ instance View NewView where
     html NewView {..} =
         [hsx|
         {breadcrumb}
-        <h1>New User</h1>
+        <h1 class="h3">New User</h1>
         {renderForm user}
     |]
       where

@@ -9,7 +9,7 @@ instance View IndexView where
         [hsx|
         {breadcrumb}
 
-        <h1>Index<a href={pathTo NewUserAction} class="btn btn-primary ms-4">+ New</a></h1>
+        <h1 class="h3">Index<a href={pathTo NewUserAction} class="btn btn-primary ms-4">+ New</a></h1>
         <div class="table-responsive">
             <table class="table">
                 <thead>
