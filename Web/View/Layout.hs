@@ -59,8 +59,8 @@ header =
                         <li class="nav-item">
                             <a href={UsersAction} 
                                aria-current={isLoginSection `ifTrueThen` "page"}
-                               class={classes ["btn btn-outline-primary", ("active", isLoginSection)]}>
-                                {svgIcon "square-plus"}
+                               class={classes ["btn btn-outline-primary hstack gap-2", ("active", isLoginSection)]}>
+                                {svgIcon "person"}
                                 Login
                             </a>
                         </li>
