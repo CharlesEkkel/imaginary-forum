@@ -17,3 +17,13 @@ data ThreadsController
     | UpdateThreadAction {threadId :: !(Id Thread)}
     | DeleteThreadAction {threadId :: !(Id Thread)}
     deriving (Eq, Show, Data)
+
+data PostController
+    = PostsAction
+    | NewPostAction
+    | ShowPostAction { postId :: !(Id Post) }
+    | CreatePostAction
+    | EditPostAction { postId :: !(Id Post) }
+    | UpdatePostAction { postId :: !(Id Post) }
+    | DeletePostAction { postId :: !(Id Post) }
+    deriving (Eq, Show, Data)

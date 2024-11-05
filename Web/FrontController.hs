@@ -2,6 +2,7 @@ module Web.FrontController where
 
 import IHP.RouterPrelude
 -- Controller Imports
+import Web.Controller.Post
 
 import IHP.Welcome.Controller (WelcomeController)
 import Web.Controller.Prelude
