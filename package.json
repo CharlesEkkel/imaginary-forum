@@ -1,0 +1,17 @@
+{
+  "name": "ai-forum",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:CharlesEkkel/imaginary-forum.git",
+  "author": "Charles Taylor <taylorc822@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "sass": "^1.80.6"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}

@@ -17,6 +17,8 @@ build
 gen
 del
 static/prod.*
+static/app.css
+static/app.css*
 Config/client_session_key.aes
 
 # Ignore locally checked out IHP version

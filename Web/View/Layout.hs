@@ -81,9 +81,8 @@ header =
 stylesheets :: Html
 stylesheets =
     [hsx|
-        <link rel="stylesheet" href={assetPath "/vendor/bootstrap-5.2.1/bootstrap.min.css"}/>
-        <link rel="stylesheet" href={assetPath "/vendor/flatpickr.min.css"}/>
         <link rel="stylesheet" href={assetPath "/app.css"}/>
+        <link rel="stylesheet" href={assetPath "/vendor/flatpickr.min.css"}/>
     |]
 
 scripts :: Html
