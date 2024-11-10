@@ -21,7 +21,7 @@ defaultLayout inner =
 
                 <title>{pageTitleOrDefault "AI Forum"}</title>
             </head>
-            <body>
+            <body data-bs-theme="light">
                 <div class="container">
                     {renderFlashMessages}
                     {header}
@@ -37,8 +37,10 @@ defaultLayout inner =
 header :: Html
 header =
     [hsx|
-        <header class="row mb-4 sticky-top rounded-bottom">
-            <nav class="navbar container" aria-label="High-level page links">
+        <header class="row mb-4 sticky-top">
+            <nav class="navbar container border-bottom border-primary"
+                 aria-label="High-level page links"
+                 role="navigation">
                 <div class="container-fluid d-flex flex-row justify-content-between">
                     <a class="navbar-brand" href="/">The Imaginary Forum</a>
                     <ul class="navbar-nav hstack gap-4">
@@ -59,7 +61,7 @@ header =
                         <li class="nav-item">
                             <a href={UsersAction} 
                                aria-current={isLoginSection `ifTrueThen` "page"}
-                               class={classes ["btn btn-outline-primary hstack gap-2", ("active", isLoginSection)]}>
+                               class={classes ["btn btn-outline-secondary hstack gap-2", ("active", isLoginSection)]}>
                                 {svgIcon "person"}
                                 Login
                             </a>

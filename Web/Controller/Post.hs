@@ -24,7 +24,11 @@ instance Controller PostController where
         post <- fetch postId
         currentThread <- fetch post.threadId
 
-        (commentQ, pagination) <- query @Comment |> paginate
+        (commentQ, pagination) <-
+            query @Comment
+                |> filterWhere (Proxy :: Proxy "postId", postId)
+                |> paginate
+
         commentsOnly <- commentQ |> fetch
         users <- traverse fetch $ fmap (\c -> c.userId) commentsOnly
 
