@@ -14,3 +14,6 @@ instance AutoRoute PostController
 instance AutoRoute UsersController
 
 instance AutoRoute CommentsController
+
+instance AutoRoute ThemesController
+

@@ -1,6 +1,7 @@
 module Web.View.Layout (defaultLayout, Html) where
 
 import Application.Helper.View
+import Application.Script.Prelude (getHeader)
 import Generated.Types
 import IHP.Controller.RequestContext
 import IHP.Environment
@@ -9,7 +10,9 @@ import Web.Routes
 import Web.Types
 
 defaultLayout :: Html -> Html
-defaultLayout inner =
+defaultLayout inner = do
+    let
+        darkModeTheme = (if getDarkMode == "enabled" then "dark" else "light") :: Text
     [hsx|
         <!DOCTYPE html>
         <html lang="en">
@@ -21,7 +24,7 @@ defaultLayout inner =
 
                 <title>{pageTitleOrDefault "AI Forum"}</title>
             </head>
-            <body data-bs-theme="light">
+            <body data-bs-theme={darkModeTheme}>
                 <div class="container">
                     {renderFlashMessages}
                     {header}
@@ -59,6 +62,13 @@ header =
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href={ThemesAction} 
+                               aria-current={isThemesPage `ifTrueThen` "page"}
+                               class={classes ["nav-link", ("active", isThemesPage)]}>
+                                Themes
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href={UsersAction} 
                                aria-current={isLoginSection `ifTrueThen` "page"}
                                class={classes ["btn btn-outline-secondary hstack gap-2", ("active", isLoginSection)]}>
@@ -74,6 +84,7 @@ header =
   where
     isFrontPage = isActiveAction ThreadsAction || isActivePath ("/" :: Text)
     isAboutPage = isActiveAction AboutAction
+    isThemesPage = isActiveAction ThemesAction
     isLoginSection = isActiveController @UsersController
 
 -- The 'assetPath' function used below appends a `?v=SOME_VERSION` to the static assets in production
@@ -83,12 +94,12 @@ header =
 stylesheets :: Html
 stylesheets =
     [hsx|
-        <link rel="stylesheet" href={assetPath "/app.css"}/>
+        <link rel="stylesheet" href={assetPath $ "/bootstrap-theme/" <> getThemeName <> "/app.css"}/>
         <link rel="stylesheet" href={assetPath "/vendor/flatpickr.min.css"}/>
     |]
 
 scripts :: Html
-scripts =
+scripts = do
     [hsx|
         {when isDevelopment devScripts}
         <script src={assetPath "/vendor/timeago.js"}></script>
@@ -99,6 +110,7 @@ scripts =
         <script src={assetPath "/vendor/turbolinks.js"}></script>
         <script src={assetPath "/vendor/turbolinksInstantClick.js"}></script>
         <script src={assetPath "/vendor/turbolinksMorphdom.js"}></script>
+        <script src={assetPath "/vendor/htmx.min.js"}></script>
         <script src={assetPath "/helpers.js"}></script>
         <script src={assetPath "/ihp-auto-refresh.js"}></script>
         <script src={assetPath "/app.js"}></script>

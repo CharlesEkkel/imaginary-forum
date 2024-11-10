@@ -45,7 +45,7 @@
           processes = {
             # Uncomment if you use tailwindcss.
             # tailwind.exec = "tailwindcss -c tailwind/tailwind.config.js -i ./tailwind/app.css -o static/app.css --watch=always";
-            scss.exec = "sass --watch static/app.scss static/app.css";
+            scss.exec = "sass --watch static/bootstrap-theme/";
           };
         };
       };

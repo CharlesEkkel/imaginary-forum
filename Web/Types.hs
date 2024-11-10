@@ -47,3 +47,14 @@ data CommentsController
     | UpdateCommentAction {commentId :: !(Id Comment)}
     | DeleteCommentAction {commentId :: !(Id Comment)}
     deriving (Eq, Show, Data)
+
+data ThemesController
+    = ThemesAction
+    | SetThemeAction {themeName :: Text}
+    | ToggleDarkModeAction
+    deriving (Eq, Show, Data)
+
+data Theme = Theme
+    { themeName :: Text
+    }
+    deriving (Eq, Show)

@@ -7,6 +7,7 @@ data AboutView = AboutView
 instance View AboutView where
     html AboutView =
         [hsx|
+            {breadcrumb}
             <h1 class="h3 mb-4">About the site...</h1>
             <p>
                 This website is purely intended as a playground to chat with a Large Language Model (LLM)
@@ -18,3 +19,9 @@ instance View AboutView where
                 Hopefully it's mildy entertaining.
             </p>
         |]
+      where
+        breadcrumb =
+            renderBreadcrumb
+                [ breadcrumbLink "Home" ThreadsAction
+                , breadcrumbText "About"
+                ]

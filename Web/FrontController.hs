@@ -2,11 +2,12 @@ module Web.FrontController where
 
 import IHP.RouterPrelude
 -- Controller Imports
-import IHP.Welcome.Controller (WelcomeController)
+
 import Web.Controller.Comments
 import Web.Controller.Post
 import Web.Controller.Prelude
 import Web.Controller.Static
+import Web.Controller.Themes
 import Web.Controller.Threads
 import Web.Controller.Users
 import Web.View.Layout (defaultLayout)
@@ -19,6 +20,7 @@ instance FrontController WebApplication where
         , parseRoute @PostController
         , parseRoute @UsersController
         , parseRoute @CommentsController
+        , parseRoute @ThemesController
         ]
 
 instance InitControllerContext WebApplication where
